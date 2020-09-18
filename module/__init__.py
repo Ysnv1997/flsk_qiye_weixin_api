@@ -1,4 +1,4 @@
-from flask import Flask,request,Response
+from flask import Flask,request,Response,make_response
 import json
 import requests
 
@@ -12,8 +12,13 @@ def get_access_token(corpid,corpsecret):
     }
     r = requests.get('https://qyapi.weixin.qq.com/cgi-bin/gettoken',params=params).content
     r = json.loads(r)
-    access_token_content = r['access_token']
-    print(access_token_content)
-    return access_token_content
+    if r['errcode'] == 0:
+        access_token_content = r['access_token']
+        print(access_token_content)
+        return access_token_content
+    else:
+        return r['errmsg']
+
+    
 # 引入路由模块
 from module import route
