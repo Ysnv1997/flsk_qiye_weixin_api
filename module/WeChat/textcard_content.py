@@ -29,7 +29,7 @@ class WeiXin_Text_Card(Resource):
                 "duplicate_check_interval": 1800
                 }
         r = requests.post('https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={ACCESS_TOKEN}'.format(ACCESS_TOKEN=access_token),data=json.dumps(data)).json()
-        return json.dumps(r)
+        return r
 
     def except_data(self):
         args = self.parser_put.parse_args()
@@ -43,6 +43,7 @@ class WeiXin_Text_Card(Resource):
             return access_token_code
         post_text = self.post_textcard_content(access_token,args['agentid'],args['title'],args['description'],args['url'])
         return post_text
+        
     def json_data(self,json):
         json['author'] = {
                     'name':'HTMAPI',
